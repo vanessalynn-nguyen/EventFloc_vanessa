@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">EventFloc</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="matching_password">Registration Success!</string>
+    <string name="nonmatching_password">Passwords don\'t match!</string>
+    <string name="successful_login">Success! Logging in...</string>
+    <string name="unsuccessful_login">Please check your password again or register if you do not have an account</string>
+    <string name="empty_fields">Please check all fields have been filled</string>
+    <string name="email_registered">This email has already been registered!</string>
+    <string name="password_length">Password is too short! Password must be greater than 8 characters</string>
+    <string name="invalid_email">This email is not valid! Please try again with a valid email</string>
+    <string name="registration_fail">Registration failed. Please try again</string>
+</resources>

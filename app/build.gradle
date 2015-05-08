@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.verve.eventfloc"
+        minSdkVersion 16
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.0.0'
+
+
+    compile files('libs/jasypt-spring31-1.9.2.jar')
+    compile files('libs/jasypt-springsecurity2-1.9.2.jar')
+    compile files('libs/jasypt-1.9.2-sources.jar')
+    compile files('libs/jasypt-spring2-1.9.2-sources.jar')
+    compile files('libs/jasypt-1.9.2.jar')
+    compile files('libs/jasypt-hibernate3-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-spring2-1.9.2.jar')
+    compile files('libs/jasypt-hibernate3-1.9.2.jar')
+    compile files('libs/jasypt-spring3-1.9.2-sources.jar')
+    compile files('libs/jasypt-springsecurity2-1.9.2-sources.jar')
+    compile files('libs/jasypt-hibernate4-1.9.2-sources.jar')
+    compile files('libs/jasypt-hibernate4-1.9.2.jar')
+    compile files('libs/jasypt-springsecurity2-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-acegisecurity-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-hibernate3-1.9.2-sources.jar')
+    compile files('libs/icu4j-3.4.4.jar')
+    compile files('libs/jasypt-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-1.9.2-lite.jar')
+    compile files('libs/jasypt-spring31-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-acegisecurity-1.9.2-sources.jar')
+    compile files('libs/jasypt-springsecurity3-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-spring3-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-spring31-1.9.2-sources.jar')
+    compile files('libs/jasypt-spring3-1.9.2.jar')
+    compile files('libs/jasypt-springsecurity3-1.9.2-sources.jar')
+    compile files('libs/jasypt-acegisecurity-1.9.2.jar')
+    compile files('libs/jasypt-springsecurity3-1.9.2.jar')
+    compile files('libs/jasypt-wicket13-1.9.2.jar')
+    compile files('libs/jasypt-spring2-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-hibernate4-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-wicket13-1.9.2-sources.jar')
+    compile files('libs/jasypt-wicket13-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-wicket15-1.9.2.jar')
+    compile files('libs/jasypt-wicket15-1.9.2-javadoc.jar')
+    compile files('libs/jasypt-wicket15-1.9.2-sources.jar')
+}
+
+
