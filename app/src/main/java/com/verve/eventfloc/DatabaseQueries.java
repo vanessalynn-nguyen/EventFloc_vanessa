@@ -45,7 +45,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     //---------------------------USER TABLE-----------------------------------------------
-    private static final String USER_ID = "user_id";
+    private static final String USER_ID = "_id";
     private static final String USER_EMAIL = "user_email";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_TYPE = "user_type";
@@ -59,7 +59,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     //---------------------------SOCIETY TABLE--------------------------------------------
-    private static final String SOCIETY_ID = "society_id";
+    private static final String SOCIETY_ID = "_id";
     private static final String SOCIETY_USER_ID = "user_id";
     private static final String SOCIETY_NAME = "society_name";
     private static final String SOCIETY_APPROVAL_DATE = "approval_date";
@@ -114,13 +114,10 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     private static final String CREATE_TABLE_USER = "create table " + TABLE_USER + " ("
-            + USER_ID + " INTEGER PRIMARY KEY, "
+            + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + USER_EMAIL + " varchar2 NOT NULL, "
             + USER_PASSWORD + " varchar2 NOT NULL, "
             + USER_TYPE + " integer(1) NOT NULL );";
-    //+ " constraint password_ck check (password like '%[0-9]%' "
-    // + " and password like '%[A-Z]%' and len(password) >=8);";
-    //-------------IF WE HAVE PASSWORD ENCRYPTION, WE DON'T NEED THIS RIGHT?--------------------
 
 
     private static final String CREATE_TABLE_STUDENT = "create table " + TABLE_STUDENT + " ("
@@ -131,7 +128,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     private static final String CREATE_TABLE_SOCIETY = "create table " + TABLE_SOCIETY + " ("
-            + SOCIETY_ID + " INTEGER PRIMARY KEY, "
+            + SOCIETY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + SOCIETY_USER_ID + " integer(7) references " + TABLE_USER + "(user_id), "
             + SOCIETY_NAME + " varchar2(50) NOT NULL, "
             + SOCIETY_APPROVAL_DATE + " integer, "

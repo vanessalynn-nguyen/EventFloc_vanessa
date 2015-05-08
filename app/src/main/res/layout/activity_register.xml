@@ -16,11 +16,12 @@
         android:textSize="30sp"
         android:layout_weight="0.2" />
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_weight="0.04">
+        android:layout_weight="0.04"
+        android:orientation="horizontal">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
 
             />
 
-    </LinearLayout>
+    </RadioGroup>
 
     <LinearLayout
         android:orientation="vertical"

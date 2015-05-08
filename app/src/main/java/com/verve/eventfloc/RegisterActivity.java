@@ -41,12 +41,9 @@ public class RegisterActivity extends ActionBarActivity {
         final DatabaseQueries dq = new DatabaseQueries(this);
 
 
-        //This doesn't work for some reason. Also the buttons are messed up (can't unselect)
         registerSocietyType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if society radio button is checked, uncheck the student raadio button
-                registerStudentType.setChecked(false);
 
 
                 registerFirstName.setHint("Society Name");
@@ -57,11 +54,9 @@ public class RegisterActivity extends ActionBarActivity {
         registerStudentType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //uncheck the society radio button if student button is checked
-                registerSocietyType.setChecked(false);
 
 
-                registerFirstName.setHint("James Name");
+                registerFirstName.setHint("First Name");
                 registerLastName.setHint("Last Name");
 
             }
@@ -103,13 +98,22 @@ public class RegisterActivity extends ActionBarActivity {
                                     if (registerStudentType.isChecked()) {
                                         //if student radio button is selected
                                         Student s = null;
-                                        Log.d("ADDING STUDENT", s.toString());
+                                        try {
+                                            s = fillStudent();
+                                            Log.d("ADDING STUDENT", s.toString());
+                                        } catch (InvalidKeySpecException e) {
+                                            e.printStackTrace();
+                                        } catch (NoSuchAlgorithmException e) {
+                                            e.printStackTrace();
+                                        }
+
                                         dq.insertStudent(s);
                                         //show successful registration toast
                                         passwordToast(true);
                                     } else if (registerSocietyType.isChecked()) {
                                         //if society radio button is selected
                                         Society s = null;
+                                        s = fillSociety();
                                         Log.d("ADDING SOCIETY", s.toString());
                                         dq.insertSociety(s);
                                         //show successful registration toast
@@ -117,7 +121,15 @@ public class RegisterActivity extends ActionBarActivity {
                                     } else {
                                         //if no radio button selected, assume default of student
                                         Student s = null;
-                                        Log.d("ADDING STUDENT", s.toString());
+                                        try {
+                                            s = fillStudent();
+                                            Log.d("ADDING STUDENT", s.toString());
+                                        } catch (InvalidKeySpecException e) {
+                                            e.printStackTrace();
+                                        } catch (NoSuchAlgorithmException e) {
+                                            e.printStackTrace();
+                                        }
+
                                         dq.insertStudent(s);
                                         //show successful registration toast
                                         passwordToast(true);
@@ -194,7 +206,7 @@ public class RegisterActivity extends ActionBarActivity {
         registerPassword = (EditText) findViewById(R.id.password);
         registerConfirmPassword = (EditText) findViewById(R.id.password_confirm);
         registerStudentType = (RadioButton) findViewById(R.id.radioButton2);
-        registerSocietyType = (RadioButton) findViewById(R.id.radioButton2);
+        registerSocietyType = (RadioButton) findViewById(R.id.radioButton);
         registerButton = (Button) findViewById(R.id.registerButton);
         backButton = (Button) findViewById(R.id.backButtonRegister);
     }
@@ -269,10 +281,9 @@ public class RegisterActivity extends ActionBarActivity {
     /**
      * Gets societ details from filled out registration form
      *
-     * @param v
      * @return
      */
-    public Society fillSociety(View v) {
+    public Society fillSociety() {
         DatabaseQueries dq = new DatabaseQueries(this);
 
         String societyName = registerFirstName.getText().toString();
