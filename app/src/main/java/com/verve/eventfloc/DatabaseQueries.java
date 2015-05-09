@@ -864,14 +864,14 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
         if (storedPassword != null) {
             Log.d("password", storedPassword);
-            //correctPassword = passwordEncryptor.checkPassword(password, storedPassword);
-
+            correctPassword = passwordEncryptor.checkPassword(password, storedPassword);
+/*
             if(password.equals(storedPassword)) {
                 correctPassword = true;
             } else {
                 correctPassword = false;
             }
-
+*/
             if (correctPassword) {
                 correctPassword = true;
                 Log.d("HELLO", "" + correctPassword);
