@@ -236,8 +236,9 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
         insertUser(student);
 
-        //cv.put(STUDENT_ID, student.getStudentID());
-        cv.put(STUDENT_USER_ID, student.getUserID());
+        int studID = findUserEmail(student.getUserEmail()).getUserID();
+
+        cv.put(STUDENT_USER_ID, studID);
         cv.put(STUDENT_FIRSTNAME, student.getFirstName());
         cv.put(STUDENT_LASTNAME, student.getLastName());
 
@@ -256,8 +257,11 @@ public class DatabaseQueries extends SQLiteOpenHelper {
     public void insertSociety(Society society) {
         ContentValues cv = new ContentValues();
 
-        //PRIMARY KEY DOES NOT INCREMENT FOR SOME REASON. ALWAYS 0
         insertUser(society);
+
+        int socID = findUserEmail(society.getUserEmail()).getUserID();
+
+        cv.put(SOCIETY_USER_ID, socID);
         cv.put(SOCIETY_NAME, society.getSocietyName());
         cv.put(SOCIETY_DESC, society.getDescription());
         cv.put(SOCIETY_FACULTY, society.getSocietyFaculty());
@@ -648,7 +652,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
      * @throws ParseException
      */
     public Society getSociety(int societyID) throws ParseException {
-        String query = "SELECT * from " + TABLE_SOCIETY + " where " + STUDENT_ID + " = \"" + societyID + "\";";
+        String query = "SELECT * from " + TABLE_SOCIETY + " where " + SOCIETY_ID + " = \"" + societyID + "\";";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Society society = new Society();
@@ -671,6 +675,32 @@ public class DatabaseQueries extends SQLiteOpenHelper {
         return society;
     }
 
+
+    public Society getSociety(String email) throws ParseException {
+        String query = "SELECT u." + USER_EMAIL + ", s." + SOCIETY_ID + ", s." + SOCIETY_NAME + " from "
+                + TABLE_SOCIETY + " s JOIN " + TABLE_USER + " u ON u." + USER_ID + " = s." + SOCIETY_USER_ID
+                + " where " + SOCIETY_ID + " = \"" + email + "\";";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Society society = new Society();
+
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            society.setSocietyID((Integer.parseInt(cursor.getString(0))));
+            society.setUserID(Integer.parseInt(cursor.getString(1)));
+            society.setSocietyName(cursor.getString(2));
+
+            String myDate = cursor.getString(3);
+            society.setApprovalDate(parser.parse(myDate));
+            society.setDescription(cursor.getString(4));
+            society.setSocietyFaculty(cursor.getString(5));
+        } else {
+            society = null;
+        }
+        db.close();
+        return society;
+    }
 
     /**
      * Get Event

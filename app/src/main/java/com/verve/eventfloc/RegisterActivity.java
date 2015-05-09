@@ -14,6 +14,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -108,6 +109,7 @@ public class RegisterActivity extends ActionBarActivity {
                                         }
 
                                         dq.insertStudent(s);
+                                        Log.d("INSERTING STUDENT", dq.findUserEmail(email).toString());
                                         //show successful registration toast
                                         passwordToast(true);
                                     } else if (registerSocietyType.isChecked()) {
@@ -117,6 +119,11 @@ public class RegisterActivity extends ActionBarActivity {
                                         Log.d("ADDING SOCIETY", s.toString());
                                         dq.insertSociety(s);
                                         Log.d("ADDING SOCIETY CHECK 2", dq.findUserEmail(email).toString());
+                                        try {
+                                            Log.d("User email check", dq.getSociety(email).toString());
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
                                         //show successful registration toast
                                         passwordToast(true);
                                     } else {

@@ -69,36 +69,6 @@ public class LoginActivity extends ActionBarActivity {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-
-                /**
-                try {
-                    successfulLogin =  dq.requestLogin(mUsername, mPassword);
-                    if(successfulLogin = true){
-
-                        Log.d("LOGIN STATUS", "Successful Login");
-                    }
-                    // Log.d("LOGIN ACCOUNT", dq.getUserEmail(mUsername).toString());
-
-                } catch (InvalidKeySpecException e) {
-                    e.printStackTrace();
-                    Log.d("LOGIN STATUS", "Unsuccessful Login");
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                    Log.d("LOGIN STATUS", "Unsuccessful Login");
-                }
-
-                if(successfulLogin = true){
-                    //WHAT HAPPENS IF USER SUCCESSFULLY LOGS IN?
-
-                    //login activity goes here
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    loginToast(true);
-                }
-                else if(successfulLogin = false){
-                    //WHAT HAPPENS IF UNSUCCESSFUL LOGIN?
-                    loginToast(false);
-                }*/
-
             }
 
         });
