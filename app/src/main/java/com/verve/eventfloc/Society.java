@@ -69,6 +69,8 @@ public class Society extends User {
         this.societyID = societyID;
     }
 
+
+
     @Override
     public String toString(){
         String s = societyID + " name: " + societyName;

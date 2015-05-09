@@ -212,18 +212,50 @@ public class DatabaseQueries extends SQLiteOpenHelper {
      * @param user
      * @return
      */
-    public void insertUser(User user) {
+    public void insertAdminUser(User user) {
         ContentValues cv = new ContentValues();
 
         cv.put(USER_EMAIL, user.getUserEmail());
         cv.put(USER_PASSWORD, String.valueOf(user.getPassword()));
-        cv.put(USER_TYPE, user.getUserType());
-
+        cv.put(USER_TYPE, 0);
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_USER, null, cv);
         db.close();
     }
 
+    /**
+     * Insert a new society User
+     *
+     * @param society
+     * @return
+     */
+    public void insertSocietyUser(Society society) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(USER_EMAIL, society.getUserEmail());
+        cv.put(USER_PASSWORD, String.valueOf(society.getPassword()));
+        cv.put(USER_TYPE, 2);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_USER, null, cv);
+        db.close();
+    }
+
+    /**
+     * Insert a new student User
+     *
+     * @param student
+     * @return
+     */
+    public void insertStudentUser(Student student) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(USER_EMAIL, student.getUserEmail());
+        cv.put(USER_PASSWORD, String.valueOf(student.getPassword()));
+        cv.put(USER_TYPE, 1);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_USER, null, cv);
+        db.close();
+    }
 
     /**
      * Insert a new Student
@@ -234,7 +266,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
     public void insertStudent(Student student) {
         ContentValues cv = new ContentValues();
 
-        insertUser(student);
+        insertStudentUser(student);
 
         int studID = findUserEmail(student.getUserEmail()).getUserID();
 
@@ -257,7 +289,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
     public void insertSociety(Society society) {
         ContentValues cv = new ContentValues();
 
-        insertUser(society);
+        insertSocietyUser(society);
 
         int socID = findUserEmail(society.getUserEmail()).getUserID();
 
@@ -282,7 +314,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
     public void insertAdmin(Admin admin) {
         ContentValues cv = new ContentValues();
 
-        insertUser(admin);
+        insertAdminUser(admin);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_ADMIN, null, cv);
@@ -536,7 +568,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     /**
-     * Delete a comment
+     * Delete a commenta
      *
      * @param commentID
      * @return
@@ -793,6 +825,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
             user.setUserID(Integer.parseInt(cursor.getString(0)));
             user.setUserEmail(cursor.getString(1));
             user.setPassword(cursor.getString(2));
+            user.setUserType(Integer.parseInt(cursor.getString(3)));
             cursor.close();
         } else {
             user = null;

@@ -32,6 +32,7 @@ public class RegisterActivity extends ActionBarActivity {
     RadioButton registerStudentType;
     Button registerButton;
     Button backButton;
+    int selectedUserType = 1;
 
 
     @Override
@@ -49,6 +50,7 @@ public class RegisterActivity extends ActionBarActivity {
 
                 registerFirstName.setHint("Society Name");
                 registerLastName.setHint("Faculty");
+                selectedUserType = 2;
             }
         });
 
@@ -59,7 +61,7 @@ public class RegisterActivity extends ActionBarActivity {
 
                 registerFirstName.setHint("First Name");
                 registerLastName.setHint("Last Name");
-
+                selectedUserType = 1;
             }
         });
 
@@ -86,8 +88,8 @@ public class RegisterActivity extends ActionBarActivity {
                             boolean exists = false;
 
 
-                            //if the password length is greater than 8
-                            if (password1.length() > 8) {
+                            //if the password length is greater than 8. CHANGE BACK TO 8 LATER-------------------
+                            if (password1.length() > 2) {
 
                                 //Checks to see if the email has already been registered
                                 exists = dq.doesEmailExist(email);
@@ -101,7 +103,8 @@ public class RegisterActivity extends ActionBarActivity {
                                         Student s = null;
                                         try {
                                             s = fillStudent();
-                                            Log.d("ADDING STUDENT", s.toString());
+                                            s.setUserType(1);
+                                            //Log.d("ADDING STUDENT", s.toString());
                                         } catch (InvalidKeySpecException e) {
                                             e.printStackTrace();
                                         } catch (NoSuchAlgorithmException e) {
@@ -112,11 +115,14 @@ public class RegisterActivity extends ActionBarActivity {
                                         Log.d("INSERTING STUDENT", dq.findUserEmail(email).toString());
                                         //show successful registration toast
                                         passwordToast(true);
+                                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(i);
                                     } else if (registerSocietyType.isChecked()) {
                                         //if society radio button is selected
                                         Society s = null;
                                         s = fillSociety();
-                                        Log.d("ADDING SOCIETY", s.toString());
+                                        s.setUserType(2);
+                                        //Log.d("ADDING SOCIETY", s.toString());
                                         dq.insertSociety(s);
                                         Log.d("ADDING SOCIETY CHECK 2", dq.findUserEmail(email).toString());
                                         try {
@@ -126,12 +132,15 @@ public class RegisterActivity extends ActionBarActivity {
                                         }
                                         //show successful registration toast
                                         passwordToast(true);
+                                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(i);
                                     } else {
                                         //if no radio button selected, assume default of student
                                         Student s = null;
                                         try {
                                             s = fillStudent();
-                                            Log.d("ADDING STUDENT", s.toString());
+                                            s.setUserType(1);
+                                            //Log.d("ADDING STUDENT", s.toString());
                                         } catch (InvalidKeySpecException e) {
                                             e.printStackTrace();
                                         } catch (NoSuchAlgorithmException e) {
@@ -139,8 +148,11 @@ public class RegisterActivity extends ActionBarActivity {
                                         }
 
                                         dq.insertStudent(s);
+                                        Log.d("INSERTING STUDENT", dq.findUserEmail(email).toString());
                                         //show successful registration toast
                                         passwordToast(true);
+                                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(i);
                                     }
                                 }
                             } else {
@@ -235,14 +247,7 @@ public class RegisterActivity extends ActionBarActivity {
         String email = registerEmail.getText().toString();
         String password = registerPassword.getText().toString();
         String confirmPassword = registerConfirmPassword.getText().toString();
-        int userType = 0;
-        if (registerStudentType.isChecked()) {
-            userType = 1;
-        } else if (registerSocietyType.isChecked()) {
-            userType = 2;
-        } else {
-            userType = 1;
-        }
+       // int userType = 1;
 
 
         Student s = new Student();
@@ -251,7 +256,7 @@ public class RegisterActivity extends ActionBarActivity {
         s.setUserEmail(email);
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
         s.setPassword(encryptedPassword);
-        s.setUserType(userType);
+        //s.setUserType(1);
 
         return s;
 
@@ -285,12 +290,7 @@ public class RegisterActivity extends ActionBarActivity {
 
         String password = registerPassword.getText().toString();
         String confirmPassword = registerConfirmPassword.getText().toString();
-        int userType = 0;
-        if (registerStudentType.isSelected()) {
-            userType = 1;
-        } else if (registerSocietyType.isSelected()) {
-            userType = 2;
-        }
+        //int userType = 2;
 
         Society s = new Society();
         s.setSocietyName(societyName);
@@ -299,6 +299,7 @@ public class RegisterActivity extends ActionBarActivity {
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
         s.setPassword(encryptedPassword);
         s.setSocietyFaculty(societyFaculty);
+        s.setUserType(2);
 
         return s;
     }

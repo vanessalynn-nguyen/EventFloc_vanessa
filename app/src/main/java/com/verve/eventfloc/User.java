@@ -16,7 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(String userEmail, String password,int userType ) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public User(String userEmail, String password, int userType ) throws InvalidKeySpecException, NoSuchAlgorithmException {
         this.userEmail = userEmail;
         this.userType = userType;
         //this.password = password; //encryption
