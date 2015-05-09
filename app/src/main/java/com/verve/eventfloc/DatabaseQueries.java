@@ -45,7 +45,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     //---------------------------USER TABLE-----------------------------------------------
-    private static final String USER_ID = "_id";
+    private static final String USER_ID = "user_id";
     private static final String USER_EMAIL = "user_email";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_TYPE = "user_type";
@@ -59,7 +59,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     //---------------------------SOCIETY TABLE--------------------------------------------
-    private static final String SOCIETY_ID = "_id";
+    private static final String SOCIETY_ID = "society_id";
     private static final String SOCIETY_USER_ID = "user_id";
     private static final String SOCIETY_NAME = "society_name";
     private static final String SOCIETY_APPROVAL_DATE = "approval_date";
@@ -677,9 +677,10 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
 
     public Society getSociety(String email) throws ParseException {
-        String query = "SELECT u." + USER_EMAIL + ", s." + SOCIETY_ID + ", s." + SOCIETY_NAME + " from "
+        String query = "SELECT u." + USER_EMAIL + ", u." + USER_ID + ", s." + SOCIETY_ID + ", s."
+                + SOCIETY_NAME + ", s." + SOCIETY_FACULTY + ", s." + SOCIETY_DESC + " from "
                 + TABLE_SOCIETY + " s JOIN " + TABLE_USER + " u ON u." + USER_ID + " = s." + SOCIETY_USER_ID
-                + " where " + SOCIETY_ID + " = \"" + email + "\";";
+                + " where u." + USER_EMAIL + " = \"" + email + "\";";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Society society = new Society();
@@ -687,15 +688,15 @@ public class DatabaseQueries extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            society.setSocietyID((Integer.parseInt(cursor.getString(0))));
+            society.setUserEmail((cursor.getString(0)));
             society.setUserID(Integer.parseInt(cursor.getString(1)));
-            society.setSocietyName(cursor.getString(2));
+            society.setSocietyID(Integer.parseInt(cursor.getString(2)));
+            society.setSocietyName(cursor.getString(3));
+            society.setSocietyFaculty(cursor.getString(4));
+            society.setDescription(cursor.getString(5));
 
-            String myDate = cursor.getString(3);
-            society.setApprovalDate(parser.parse(myDate));
-            society.setDescription(cursor.getString(4));
-            society.setSocietyFaculty(cursor.getString(5));
         } else {
+            Log.d("get society", "null");
             society = null;
         }
         db.close();
@@ -845,7 +846,7 @@ public class DatabaseQueries extends SQLiteOpenHelper {
         String query = "Select " + USER_PASSWORD + ", " + USER_EMAIL + " FROM " + TABLE_USER + " WHERE "
                 + USER_EMAIL + " = \"" + email + "\";";
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -862,7 +863,14 @@ public class DatabaseQueries extends SQLiteOpenHelper {
         db.close();
 
         if (storedPassword != null) {
-            correctPassword = passwordEncryptor.checkPassword(password, storedPassword);
+            Log.d("password", storedPassword);
+            //correctPassword = passwordEncryptor.checkPassword(password, storedPassword);
+
+            if(password.equals(storedPassword)) {
+                correctPassword = true;
+            } else {
+                correctPassword = false;
+            }
 
             if (correctPassword) {
                 correctPassword = true;
@@ -871,12 +879,14 @@ public class DatabaseQueries extends SQLiteOpenHelper {
                 correctPassword = false;
                 Log.d("HELLO", "" + correctPassword);
             }
+            cursor.close();
             return correctPassword;
         }
         else {
             Log.d("HELLO", "NO SUCH USER");
             correctPassword = false;
             Log.d("HELLO", "" + correctPassword);
+            cursor.close();
             return correctPassword;
         }
 

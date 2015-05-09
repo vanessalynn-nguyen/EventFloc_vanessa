@@ -249,34 +249,14 @@ public class RegisterActivity extends ActionBarActivity {
         s.setFirstName(firstName);
         s.setLastName(lastName);
         s.setUserEmail(email);
-        if (password.equals(confirmPassword)) {
-            String encryptedPassword = passwordEncryptor.encryptPassword(password);
-            s.setPassword(encryptedPassword);
-        } else
-
-
-            s.setUserType(userType);
+        String encryptedPassword = passwordEncryptor.encryptPassword(password);
+        s.setPassword(encryptedPassword);
+        s.setUserType(userType);
 
         return s;
 
     }
 
-    /**
-     * When Radio button selected, changes fields
-     *
-     * @param v
-
-    public void radioUserType(View v) {
-
-        if (v == registerSocietyType) {
-            registerFirstName.setHint("Society Name");
-            registerLastName.setHint("Faculty");
-
-        } else if (v == registerStudentType) {
-            registerFirstName.setHint("First Name");
-            registerLastName.setHint("Last Name");
-        }
-    }*/
 
     /**
      * Start the activity
@@ -293,6 +273,8 @@ public class RegisterActivity extends ActionBarActivity {
      */
     public Society fillSociety() {
         DatabaseQueries dq = new DatabaseQueries(this);
+
+        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
         String societyName = registerFirstName.getText().toString();
         String societyEmail = registerEmail.getText().toString();
@@ -314,7 +296,8 @@ public class RegisterActivity extends ActionBarActivity {
         s.setSocietyName(societyName);
         s.setUserEmail(societyEmail);
         s.setApprovalDate(societyDate);
-        s.setPassword(password);
+        String encryptedPassword = passwordEncryptor.encryptPassword(password);
+        s.setPassword(encryptedPassword);
         s.setSocietyFaculty(societyFaculty);
 
         return s;
