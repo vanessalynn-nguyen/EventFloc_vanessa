@@ -116,6 +116,7 @@ public class RegisterActivity extends ActionBarActivity {
                                         s = fillSociety();
                                         Log.d("ADDING SOCIETY", s.toString());
                                         dq.insertSociety(s);
+                                        Log.d("ADDING SOCIETY CHECK 2", dq.findUserEmail(email).toString());
                                         //show successful registration toast
                                         passwordToast(true);
                                     } else {

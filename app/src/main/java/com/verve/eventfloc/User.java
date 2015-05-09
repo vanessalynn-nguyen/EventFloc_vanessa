@@ -54,4 +54,9 @@ public class User {
     public void setUserType(int userType) {
         this.userType = userType;
     }
+
+    public String toString() {
+        String s = "ID: " + userID + ", email: " + userEmail + ", user type: " + userType;
+        return s;
+    }
 }
