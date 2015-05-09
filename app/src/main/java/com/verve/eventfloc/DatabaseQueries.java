@@ -834,6 +834,8 @@ public class DatabaseQueries extends SQLiteOpenHelper {
         return user;
     }
 
+    //////
+
     public boolean doesEmailExist(String email){
         String query = "Select * FROM " + TABLE_USER + " WHERE "
                 + USER_EMAIL + " = \"" + email + "\";";
